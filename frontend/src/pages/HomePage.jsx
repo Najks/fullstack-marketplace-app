@@ -37,43 +37,62 @@ export default function HomePage() {
     return (
         <div className="home-page">
             {/* Hero Section */}
-            <section
-                className="py-5 mb-5 text-center bg-primary"
-                style={{
-                    background: 'linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-info) 100%)',
-                    minHeight: '400px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white'
-                }}
-            >
-                <div className="container">
-                    <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-                        <div style={{ fontSize: '100px', marginBottom: '20px', animation: 'float 3s ease-in-out infinite' }}>
-                            🛍️
+            <section className="hero-section mb-5">
+                <div className="container py-5">
+                    <div className="row align-items-center" style={{ minHeight: '400px' }}>
+                        <div className="col-lg-6 mb-4 mb-lg-0">
+                            <h1 className="display-4 fw-bold mb-4" style={{
+                                color: 'var(--bs-dark)',
+                                letterSpacing: '-0.5px',
+                                lineHeight: '1.2'
+                            }}>
+                                Local Marketplace
+                            </h1>
+                            <p className="lead text-muted mb-4" style={{
+                                fontSize: '1.15rem',
+                                lineHeight: '1.7'
+                            }}>
+                                List items for sale or browse products from sellers in your area.
+                            </p>
+                            <div className="d-flex gap-3 flex-wrap">
+                                <Button
+                                    type="button"
+                                    className="btn btn-primary fw-semibold px-4 py-2"
+                                    style={{
+                                        borderRadius: '6px',
+                                        fontSize: '1rem'
+                                    }}
+                                    onClick={() => navigate('/products')}
+                                >
+                                    Browse Products
+                                </Button>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-primary fw-semibold px-4 py-2"
+                                    style={{
+                                        borderRadius: '6px',
+                                        fontSize: '1rem'
+                                    }}
+                                    onClick={() => navigate('/create-product')}
+                                >
+                                    List a Product
+                                </button>
+                            </div>
                         </div>
-                        <h1 className="display-4 fw-bold mb-3">
-                            Buy and Sell Locally
-                        </h1>
-                        <p className="lead mb-4" style={{ fontSize: '1.1rem', opacity: 0.95 }}>
-                            Publish your product for free and connect directly with buyers.
-                        </p>
-                        <div className="d-flex gap-3 flex-wrap justify-content-center">
-                            <Button
-                                type="button"
-                                className="btn btn-light fw-bold px-5 py-2"
-                                onClick={() => navigate('/products')}
-                            >
-                                View Products
-                            </Button>
-                            <button
-                                type="button"
-                                className="btn btn-outline-light fw-bold px-5 py-2"
-                                onClick={() => navigate('/create-product')}
-                            >
-                                Add Your Product
-                            </button>
+                        <div className="col-lg-6">
+                            <div className="position-relative">
+                                <div style={{
+                                    background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                                    borderRadius: '16px',
+                                    padding: '3rem',
+                                    boxShadow: '0 10px 40px rgba(0,0,0,0.08)'
+                                }}>
+                                    <div className="text-center">
+                                        <h3 className="h5 fw-semibold text-muted mb-2">Start selling today</h3>
+                                        <p className="text-muted small mb-0">No fees • Direct contact • Local deals</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -81,9 +100,9 @@ export default function HomePage() {
 
             {/* Recent Products Section */}
             <section className="container mb-5">
-                <div className="mb-4">
-                    <h2 className="h3 fw-bold">Recently Added Products</h2>
-                    <p className="text-muted">Discover the latest items from our community</p>
+                <div className="mb-5">
+                    <h2 className="h2 fw-bold mb-2">Recently Added</h2>
+                    <p className="text-muted">Check out the latest products from our community</p>
                 </div>
 
                 {error && (
@@ -95,22 +114,23 @@ export default function HomePage() {
 
                 {loading ? (
                     <div className="text-center py-5">
-                        <div className="spinner-border text-primary" role="status">
+                        <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
                             <span className="visually-hidden">Loading...</span>
                         </div>
-                        <p className="text-muted mt-2">Loading products…</p>
+                        <p className="text-muted mt-3">Loading products…</p>
                     </div>
                 ) : recentProducts.length > 0 ? (
                     <ProductGrid products={recentProducts} />
                 ) : (
                     <div className="text-center py-5">
-                        <p className="text-muted mb-3">No products available yet.</p>
+                        <div className="mb-4" style={{ fontSize: '4rem', opacity: 0.3 }}>📦</div>
+                        <p className="text-muted mb-4 fs-5">No products available yet.</p>
                         <button
                             type="button"
-                            className="btn btn-primary"
+                            className="btn btn-primary btn-lg px-5"
                             onClick={() => navigate('/create-product')}
                         >
-                            Be the first to add a product!
+                            Be the first to add a product
                         </button>
                     </div>
                 )}
