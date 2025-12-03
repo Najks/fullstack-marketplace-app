@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// schema: https://dbdiagram.io/d/68f681502e68d21b416118ec
+// nadaljne migracije so s y
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   Int         @id @default(autoincrement())
+  google_id            String?     @unique
+  email                String      @unique
+  email_verified       Boolean     @default(false)
+  username             String
+  phone_number         String?
+  first_name           String?
+  last_name            String?
+  profile_picture_path String?
+  created_at           DateTime    @default(now())
+  Product              Product[]
+  Favourite            Favourite[]
+}
+
+model Category {
+  id         Int               @id @default(autoincrement())
+  name       String            @unique
+  created_at DateTime          @default(now())
+  deleted_at DateTime?
+  products   CategoryProduct[]
+}
+
+model CategoryProduct {
+  id         Int       @id @default(autoincrement())
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId Int
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId  Int
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+
+  @@unique([categoryId, productId])
+}
+
+model Product {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  price       Float
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  status      ProductStatus @relation(fields: [statusId], references: [id])
+  statusId    Int
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  deleted_at  DateTime?
+
+  images     ProductImage[]
+  favourites Favourite[]
+  categories CategoryProduct[]
+  location   Location?         @relation(fields: [locationId], references: [id])
+  locationId Int?
+}
+
+model Location {
+  id         Int      @id @default(autoincrement())
+  city       String
+  country    String?
+  created_at DateTime @default(now())
+
+  products Product[]
+}
+
+model ProductStatus {
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+  products   Product[]
+}
+
+model ProductImage {
+  id         Int       @id @default(autoincrement())
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId  Int
+  url        String
+  isPrimary  Boolean   @default(false)
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+}
+
+model Favourite {
+  id         Int       @id @default(autoincrement())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId  Int
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+}
