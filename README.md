@@ -73,7 +73,7 @@ A full-stack marketplace application built with React and Express.js, featuring 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/Express-Marketplace-App.git](https://github.com/Najks/fullstack-marketplace-app
+git clone https://github.com/Najks/fullstack-marketplace-app
 cd fullstack-marketplace-app
 ```
 
