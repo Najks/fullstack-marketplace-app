@@ -1,7 +1,7 @@
 # Express Marketplace App
 
 A full-stack marketplace application built with React and Express.js, featuring user authentication, product listings, categories, and favorites functionality.
-
+<img src="/frontend/images/homepage.png" alt="Homepage screenshot" width="800" />
 ## Features
 
 - JWT & Google OAuth 2.0 authentication
