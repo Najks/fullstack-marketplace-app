@@ -1,4 +1,3 @@
-// javascript
 const { PrismaClient } = require('../generated/prisma');
 const prisma = new PrismaClient();
 
@@ -21,6 +20,13 @@ async function seedCore() {
             where: { name },
             update: {},
             create: { name },
+        });
+    }
+
+    const existingLocation = await prisma.location.findFirst();
+    if (!existingLocation) {
+        await prisma.location.create({
+            data: { city: 'Default', country: "Slovenia" },
         });
     }
 }
